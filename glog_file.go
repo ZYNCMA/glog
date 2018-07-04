@@ -39,12 +39,12 @@ var logDirs []string
 
 // If non-empty, overrides the choice of directory in which to write logs.
 // See createLogDirs for the full list of possible destinations.
-var logDir = flag.String("log_dir", "", "If non-empty, write log files in this directory")
-var logFileNum = flag.Int("log_file_num", 10, "$log_file_num files will be preserved per level, default to 10")
+var LogDir = flag.String("log_dir", "", "If non-empty, write log files in this directory")
+var LogFileNum = flag.Int("log_file_num", 10, "$log_file_num files will be preserved per level, default to 10")
 
 func createLogDirs() {
-	if *logDir != "" {
-		logDirs = append(logDirs, *logDir)
+	if *LogDir != "" {
+		logDirs = append(logDirs, *LogDir)
 	}
 	logDirs = append(logDirs, os.TempDir())
 }
@@ -145,10 +145,10 @@ func clean(dir, tag string) error {
 		}
 	}
 	sort.Strings(logs)
-	if *logFileNum < 1 {
-		*logFileNum = 1
+	if *LogFileNum < 1 {
+		*LogFileNum = 1
 	}
-	for i := 0; i < len(logs)-*logFileNum; i++ {
+	for i := 0; i < len(logs)-*LogFileNum; i++ {
 		os.Remove(logs[i])
 	}
 	return nil
